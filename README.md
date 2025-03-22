@@ -69,11 +69,15 @@ Para isso foi criado um modificador de penalização, que consiste em um número
 
 Durante o treinamento foi utilizado 5 como modificador de penalização constante.
 
+### Penalização por game-over errante
+
+Caso a cobra faça 100 movimentos seguidos sem comer nada, o jogo automaticamente dá game-over, como esse tipo de situação é indesejada (para evitar que a cobra fique presa em loop num mesmo local), esse fim de jogo mesmo não sendo colisão (movimento catastrófico) também é penalizado da mesma forma.
+
 # Treinamentos
 
 | Versão | Pesos | Mapa | Visualização | Comidas | LR | Jogos | Zerar gradiente após | Auto Game-Over |
 |--------|-------|------|--------------|---------|----|-------|----------------------|----------------|
-| vX.0 | cnn_X0.[pth / onnx] | 25x25 | 11x11 | 50 | 1e-5 | 20.000 | 5 nem* | 100 nem* |
+| vX.0 | cnn_X0.[pth / onnx] | 25x25 | 11x11 | 50 | 1e-5 | 10.000 | 5 nem* | 100 nem* |
 | vX.1 | cnn_X1.[pth / onnx] | 25x25 | 11x11 | 25 | 5e-6 | 10.000 | 25 nem* | 100 nem* |
 | vX.3 | cnn_X2.[pth / onnx] | 50x50 | 11x11 | 25 | 5e-6 | 10.000 | 50 nem* | 100 nem* |
 
