@@ -9,9 +9,9 @@ from app.model.snake import Snake
 from app.model.data_gen import gen_visualization
 
 
-MAP_SHAPE = (25, 25)
+MAP_SHAPE = (50, 50)
 VIS_SHAPE = (11, 11)
-N_FOODS = 50
+N_FOODS = 25
 EPOCHS = 10000
 
 last_10_scores = list()
@@ -19,8 +19,8 @@ best_last_10 = 0
 scores = list()
 
 model = CNN(8, 11)
-# model.load_state_dict(torch.load("learning_models/trained_weights/cnn_2.pth"))
-optim = torch.optim.Adam(model.parameters(), lr=1e-5, amsgrad=True)
+model.load_state_dict(torch.load("learning_models/trained_weights/cnn_21.pth"))
+optim = torch.optim.Adam(model.parameters(), lr=5e-6, amsgrad=True)
 loss_fn = nn.MSELoss()
 
 for epoch in range(EPOCHS):
@@ -38,18 +38,31 @@ for epoch in range(EPOCHS):
             if response == 1:
                 y = torch.zeros([4])
                 y[torch.argmax(pred).item()] = 1
+
             elif response == -1:
                 y = torch.ones([4])
                 y[torch.argmax(pred).item()] = 0
+
+                y = y * 5
         
             loss = loss_fn(pred, y)
             loss.backward()
             optim.step()
         else:
             no_eating += 1
-            if no_eating >= 25:
+            if no_eating >= 50:
                 model.zero_grad()
                 no_eating = 0
+
+            if game.game_over(): # Excedeu o número de jogadas sem comer
+                y = torch.ones([4])
+                y[torch.argmax(pred).item()] = 0
+
+                y = y * 10
+        
+                loss = loss_fn(pred, y)
+                loss.backward()
+                optim.step()
 
     print(f"epoch: [{epoch+1}/{EPOCHS}]  \tscore: {game.get_score():.2f} {'<- No food' if game.get_score() == 0 else ''}", end="")
 

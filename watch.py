@@ -21,7 +21,7 @@ def inference(*inputs):
 
     return onnxruntime_outputs
 
-MAP_SHAPE = (25, 25)
+MAP_SHAPE = (50, 50)
 VIS_SHAPE = (11, 11)
 N_FOODS = 15
 
