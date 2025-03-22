@@ -2,6 +2,9 @@
 
 ![Snake](./learning_models/trained_weights/snake.gif)
 
+# Créditos
+
+- ### Autor: [Rafael Marinho dos Anjos](https://github.com/Rafael-Marinho-dos-Anjos)
 
 # Gerando entrada para o modelo
 
@@ -74,16 +77,6 @@ Nas versões v*.1, o intuito é fazer com que o algoritmo consiga aprender padr�
 
 As versões v*.2 são treinadas com um mapa mais amplo, fazendo com que o algoritmo seja forçado a explorar o mapa.
 
-# Arquiteturas utilizadas
-
-As arquiteturas de redes utilizadas são mostradas a seguir:
-
-## v1.*
-
-![v1](./learning_models/trained_weights/archtectures/v1.png)
-
-## v2.*
-
 # Selecionando momento de melhor desempenho
 
 Para selecionar o momento de melhor ajuste de pesos, é feita a média dos scores dos últimos 10 jogos, caso essa média supere o atual melhor desempenho (maior média anterior), uma cópia do modelo é salva e o melhor desempenho é atualizado.
@@ -101,3 +94,13 @@ Onde:
 
 - T = Tamanho da cobra (1 + quantidade total de comidas);
 - n = Turno atual (número total de movimentos);
+
+# Arquiteturas utilizadas
+
+As arquiteturas de redes utilizadas são mostradas a seguir:
+
+## v1.*
+
+![v1](./learning_models/trained_weights/archtectures/v1.png)
+
+## v2.*
