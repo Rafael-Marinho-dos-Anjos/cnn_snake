@@ -39,6 +39,6 @@ while not game.game_over():
     frames.append(frame)
     frame = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
     cv2.imshow("snake", frame)
-    cv2.waitKey(50)
+    cv2.waitKey(2)
 
-# imageio.mimsave("snake.gif", frames[:-5], duration=0.2)
+imageio.mimsave("snake.gif", frames[:-5], duration=0.2)
