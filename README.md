@@ -1,20 +1,35 @@
 # Jogo da cobrinha com Redes Neurais
 
-![Snake](./learning_models/trained_weights/snake.gif)
+![Snake](./images/snake.gif)
 
 # Créditos
 
 - ### Autor: [Rafael Marinho dos Anjos](https://github.com/Rafael-Marinho-dos-Anjos)
 
+# Introdução
+
+Este projeto consiste na implementação do "Jogo da cobrinha" juntamente com a modelagem e treinamento de modelos de redes neurais para controlá-lo de forma automática.
+
+Todo o projeto foi feito de forma que as configurações do jogo, como tamanho do mapa e quantidade de comidas espalhadas, seja configurável e não gere impacto no funcionamento da inteligência artificial resposável por jogar.
+
+Todo o processo de treinamento dos algoritmos foi feito utilizando conceitos de aprendizagem por reforço, onde o agente interage com o sistema e isso gera uma resposta positiva ou negativa, que é utilizada como base para realizar o ajuste de pesos.
+
 # Gerando entrada para o modelo
 
-A entrada do modelo consiste em um tensor de dimensões 11x11x8 (pode ser interpretado como uma imagem 11x11 de 8 canais), onde os 8 canais são divididos entre 4 canais de visão panorâmica e 4 canais de visão local.
+A entrada do modelo consiste em um tensor de dimensões 11x11x8 (pode ser interpretado como uma imagem de dimensão 11x11 com 8 canais), onde os 8 canais são divididos entre 4 canais de visão panorâmica e 4 canais de visão local.
 
-- Canais de visão panorâmica: São formados pelo resize (utilizando interpolação por área) das matrizes de localização de elementos do mapa geral. Cada canal contém as localizações de elementos específicos entre: Casas vazias, comidas, corpo da cobra e parede (limite do mapa). <br>
+- Canais de visão panorâmica: São formados pelo redimensionamento (utilizando interpolação por área) das matrizes de localização de elementos do mapa geral. Cada canal contém as localizações de elementos específicos entre: Casas vazias, comidas, corpo da cobra e parede (limite do mapa). <br>
 Esses canais contém informações sobre a distribuição geral dos elementos sobre o mapa todo, fazendo com que a cobra consiga localizar elementos distantes (fora do alcance da visão local).
 
 - Canais de visão local: São formados pelo corte das matrizes de localização de elementos do mapa geral de forma a coincidir a cabeça da cobra com o elemento central. Cada canal contém as localizações de elementos específicos entre: Casas vazias, comidas, corpo da cobra e parede (limite do mapa). <br>
 Esses canais contém informações precisas sobre os elementos mais próximos da cabeça da cobra, fazendo com que a atenção a elementos iminentes seja maior.
+
+### Canais de visão local e panorâmica
+
+| Mapa | Canais Locais | Canais Globais |
+|----------|---------------|----------------|
+| <img src="./images/frame.png" alt="mapa" heigth="200"/> | <img src="./images/local.png" alt="local" heigth="200"/> | <img src="./images/global.png" alt="global" heigth="200"/> |
+| Visão do jogador | Localização exata dos elementos mais próximos da cabeça da serpente | Densidade de localização dos elementos distribuídos pelo mapa |
 
 # Saída do modelo
 
@@ -75,6 +90,10 @@ Caso a cobra faça 100 movimentos seguidos sem comer nada, o jogo automaticament
 
 # Treinamentos
 
+Foram realizados diversos passos de treinamento utilizando diferentes modelos.
+
+Cada  treinamento realizado é identificado por uma versão no padrão v**A**.**B**, onde *A* indica o modelo de rede e *B* indica o passo de treinamento executado.
+
 | Versão | Pesos | Mapa | Visualização | Comidas | LR | Jogos | Zerar gradiente após | Auto Game-Over |
 |--------|-------|------|--------------|---------|----|-------|----------------------|----------------|
 | vX.0 | cnn_X0.[pth / onnx] | 25x25 | 11x11 | 50 | 1e-5 | 10.000 | 5 nem* | 100 nem* |
@@ -92,6 +111,8 @@ As versões vX.2 são treinadas com um mapa mais amplo, fazendo com que o algori
 # Selecionando momento de melhor desempenho
 
 Para selecionar o momento de melhor ajuste de pesos, é feita a média dos scores dos últimos 10 jogos, caso essa média supere o atual melhor desempenho (maior média anterior), uma cópia do modelo é salva e o melhor desempenho é atualizado.
+
+![Gráfico de scores médios do treinamento v1.0](./learning_models/trained_weights/scores_1.png)
 
 ## Calculo de scores:
 
@@ -111,10 +132,10 @@ Onde:
 
 As arquiteturas de redes utilizadas são mostradas a seguir:
 
-## v1.X
+## v1.x
 
 ![v1](./learning_models/trained_weights/archtectures/v1.png)
 
-## v2.X
+## v2.x
 
 ![v2](./learning_models/trained_weights/archtectures/v2.png)
